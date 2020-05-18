@@ -1,11 +1,13 @@
 package com.github.ovorobeva;
 
-import com.github.ovorobevablog.Blog;
-import com.github.ovorobevablog.BlogMockedData;
+import com.github.ovorobeva.blog.Blog;
+import com.github.ovorobeva.database.BlogRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 public class BlogController {
@@ -14,39 +16,49 @@ public class BlogController {
     public String index() {
         return "Congratulations from BlogController.java";
     }*/
-    BlogMockedData blogMockedData = BlogMockedData.getInstance();
+    @Autowired
+    BlogRepository blogRepository;
+
 
     @GetMapping("/blog")
     public List<Blog> getBlogs(){
-        return blogMockedData.fetchBlogs();
+        return blogRepository.findAll();
     }
+/*    @GetMapping("/blog/{id}")
+    public Optional<Blog> getBlog(@PathVariable String id){
+        return blogRepository.findById(Integer.parseInt(id));
+    }*/
+    //TODO: to fix getting one blog by its id with the getOne method
     @GetMapping("/blog/{id}")
-    public Blog getBlogs(@PathVariable String id){
-        return blogMockedData.getBlogById(Integer.parseInt(id));
+    public Blog getBlog(@PathVariable String id){
+        return blogRepository.getOne(Integer.parseInt(id));
     }
 
-    @PostMapping("blog/search")
+    @PostMapping("/blog/search")
     public List<Blog> search(@RequestBody Map<String, String> body){
         String searchItem = body.get("text");
-        return blogMockedData.searchBlogs(searchItem);
+        return blogRepository.findByTitleContainsOrContentContains(searchItem, searchItem);
     }
 
-    @PostMapping("blog")
+    @PostMapping("/blog")
     public Blog create(@RequestBody Map<String, String> body){
-        int id = Integer.parseInt(body.get("id"));
         String title = body.get("title");
         String content = body.get("content");
-        return blogMockedData.createBlog(id, title, content);
+        return blogRepository.save(new Blog(title, content));
     }
 
-    @PutMapping("blog/{id}")
+    @PutMapping("/blog/{id}")
     public Blog updateBlog(@PathVariable String id, @RequestParam String title, String content){
-        return blogMockedData.updateBlog(Integer.parseInt(id), title, content);
+        Blog blogToUpdate = blogRepository.getOne(Integer.parseInt(id));
+        blogToUpdate.setTitle(title);
+        blogToUpdate.setContent(content);
+        return blogRepository.save(blogToUpdate);
     }
 
-    @DeleteMapping("blog/{id}")
+    @DeleteMapping("/blog/{id}")
     public boolean delete(@PathVariable String id){
-        return blogMockedData.deleteBlog(Integer.parseInt(id));
+        blogRepository.deleteById(Integer.parseInt(id));
+        return true;
     }
 
 }

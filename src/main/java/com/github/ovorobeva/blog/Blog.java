@@ -1,21 +1,36 @@
-package com.github.ovorobevablog;
+package com.github.ovorobeva.blog;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "Blog")
 public class Blog {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column (name = "Title")
     private String title;
+    @Column (name = "Content")
     private String content;
 
     public Blog() {
     }
 
-    public int getId() {
-        return id;
+    public Blog(String title, String content) {
+        setTitle(title);
+        setContent(content);
     }
 
     public Blog(int id, String title, String content) {
         setId(id);
         setTitle(title);
         setContent(content);
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void setId(int id) {
