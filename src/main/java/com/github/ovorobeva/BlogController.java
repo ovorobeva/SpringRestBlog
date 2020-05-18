@@ -24,11 +24,6 @@ public class BlogController {
     public List<Blog> getBlogs(){
         return blogRepository.findAll();
     }
-/*    @GetMapping("/blog/{id}")
-    public Optional<Blog> getBlog(@PathVariable String id){
-        return blogRepository.findById(Integer.parseInt(id));
-    }*/
-    //TODO: to fix getting one blog by its id with the getOne method
     @GetMapping("/blog/{id}")
     public Blog getBlog(@PathVariable String id){
         return blogRepository.getOne(Integer.parseInt(id));
