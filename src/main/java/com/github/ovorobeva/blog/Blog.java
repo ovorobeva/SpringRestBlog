@@ -1,6 +1,10 @@
 package com.github.ovorobeva.blog;
 
+
+import org.hibernate.annotations.NotFound;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "Blog")
@@ -11,8 +15,11 @@ public class Blog {
     private int id;
 
     @Column (name = "Title")
+    @NotNull(message = "Title cannot be null")
     private String title;
+
     @Column (name = "Content")
+    @NotNull(message = "Content cannot be null")
     private String content;
 
     public Blog() {
