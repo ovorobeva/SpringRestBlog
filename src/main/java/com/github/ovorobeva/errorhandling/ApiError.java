@@ -2,12 +2,16 @@ package com.github.ovorobeva.errorhandling;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApiError {
 
@@ -37,30 +41,6 @@ public class ApiError {
         this.setStatus(status);
         this.setMessage(message);
         this.setDebugMessage(ex.getLocalizedMessage());
-    }
-
-    public HttpStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(HttpStatus status) {
-        this.status = status;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public String getDebugMessage() {
-        return debugMessage;
-    }
-
-    public void setDebugMessage(String debugMessage) {
-        this.debugMessage = debugMessage;
     }
 
     void addValidationErrors(List<FieldError> fieldErrors) {
