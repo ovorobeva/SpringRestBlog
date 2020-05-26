@@ -39,7 +39,9 @@ public class BlogExceptionHandler extends ResponseEntityExceptionHandler {
                                                         HttpHeaders headers,
                                                         HttpStatus status,
                                                         WebRequest request){
-        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, "Integer is required", ex);
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex);
+        apiError.setMessage(String.format("The parameter '%s' of value '%s' could not be converted to type '%s'",
+                ex.getPropertyName(), ex.getValue(), ex.getRequiredType().getSimpleName()));
         return new ResponseEntity(apiError, HttpStatus.BAD_REQUEST);
     }
 

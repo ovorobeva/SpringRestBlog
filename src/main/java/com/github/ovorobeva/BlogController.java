@@ -2,6 +2,7 @@ package com.github.ovorobeva;
 
 import com.github.ovorobeva.blog.Blog;
 import com.github.ovorobeva.database.BlogRepository;
+import org.springframework.beans.TypeMismatchException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,9 +36,8 @@ public class BlogController {
     }
 
 
-    @PostMapping("/blog/search")
-    public ResponseEntity<List<Blog>> search(@RequestBody Map<String, String> body) {
-        String searchItem = body.get("text");
+    @GetMapping("/blog/search/{searchItem}")
+    public ResponseEntity<List<Blog>> search(@PathVariable String searchItem) throws TypeMismatchException {
         List<Blog> blogList = blogRepository.findByTitleContainsOrContentContains(searchItem, searchItem);
         return ResponseEntity.ok().body(blogList);
     }
