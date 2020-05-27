@@ -1,4 +1,4 @@
-package com.github.ovorobeva.blog;
+package com.github.ovorobeva.model;
 
 
 import lombok.Data;

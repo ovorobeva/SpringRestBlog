@@ -1,6 +1,6 @@
-package com.github.ovorobeva.blog;
+package com.github.ovorobeva.dao;
 
-import com.github.ovorobeva.blog.Blog;
+import com.github.ovorobeva.model.Blog;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

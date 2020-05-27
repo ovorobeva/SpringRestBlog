@@ -1,7 +1,7 @@
-package com.github.ovorobeva;
+package com.github.ovorobeva.controller;
 
-import com.github.ovorobeva.blog.Blog;
-import com.github.ovorobeva.blog.BlogRepository;
+import com.github.ovorobeva.model.Blog;
+import com.github.ovorobeva.dao.BlogRepository;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

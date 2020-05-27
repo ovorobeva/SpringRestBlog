@@ -1,5 +1,7 @@
-package com.github.ovorobeva.security;
+package com.github.ovorobeva.service;
 
+import com.github.ovorobeva.dao.UserRepository;
+import com.github.ovorobeva.model.CustomUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,3 +26,19 @@ public class CustomUserDetailsService implements UserDetailsService {
         return user;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
