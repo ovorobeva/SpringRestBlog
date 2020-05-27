@@ -1,4 +1,4 @@
-package com.github.ovorobeva.database;
+package com.github.ovorobeva.blog;
 
 import com.github.ovorobeva.blog.Blog;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface BlogRepository extends JpaRepository<Blog, Integer> {
-    List<Blog> findByTitleContainsOrContentContains(String text, String textAgain);
+    List<Blog> findByTitleContainsOrContentContains(String toSearchInTitle, String toSearchInContent);
 }
