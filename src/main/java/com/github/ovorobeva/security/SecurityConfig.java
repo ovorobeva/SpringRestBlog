@@ -30,6 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/blog/{id}").hasRole("ADMIN")
                 .antMatchers("/blog/**").hasAnyRole("USER", "ADMIN")
                 .and().formLogin().and()
+                //TODO: remove csrf.disable. It's for test only
                 .csrf().disable();
     }
 }

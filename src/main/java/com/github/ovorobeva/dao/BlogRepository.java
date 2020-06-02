@@ -10,7 +10,4 @@ import java.util.List;
 @Repository
 public interface BlogRepository extends JpaRepository<Blog, Integer> {
     List<Blog> findByTitleContainsOrContentContains(String toSearchInTitle, String toSearchInContent);
-//TODO: use DTO, remove custom query
-    @Query(value = "SELECT id, title, content, 'null' as user FROM Blog WHERE id = ?1")
-    Object getOne(int id);
 }
