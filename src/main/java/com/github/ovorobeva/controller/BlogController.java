@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
@@ -27,10 +28,10 @@ public class BlogController {
     @Autowired
     UserRepository userRepository;
 
+    ModelMapper mapper = new ModelMapper();
 
     @GetMapping("/blog")
     public ResponseEntity<List<BlogDto>> getBlogs() throws EntityNotFoundException {
-        ModelMapper mapper = new ModelMapper();
 
         List<BlogDto> blogs = blogRepository.findAll()
                 .stream()
@@ -42,7 +43,6 @@ public class BlogController {
 
     @GetMapping("/blog/{id}")
     public ResponseEntity<BlogDto> getBlog(@PathVariable int id) throws EntityNotFoundException {
-        ModelMapper mapper = new ModelMapper();
         if (!blogRepository.findById(id).isPresent())
             throw new EntityNotFoundException("The blog with ID = " + id + " doesn't exist");
         return ResponseEntity.ok().body(mapper.map(blogRepository.getOne(id), BlogDto.class));
@@ -50,7 +50,6 @@ public class BlogController {
 
     @GetMapping("/blog/search/{searchItem}")
     public ResponseEntity<List<BlogDto>> search(@PathVariable String searchItem) throws TypeMismatchException {
-        ModelMapper mapper = new ModelMapper();
         List<BlogDto> blogList = blogRepository.findByTitleContainsOrContentContains(searchItem, searchItem)
                 .stream()
                 .map(element -> mapper.map(element, BlogDto.class))
@@ -65,14 +64,13 @@ public class BlogController {
         return ResponseEntity.status(201).body(mapper.map(blogRepository.save(blog), BlogDto.class));
     }
 
+    @PreAuthorize("principal.username.equals(blogRepository.getOne(#id).getUser().getUsername()) ")
     @PutMapping("/blog/{id}")
     public ResponseEntity<BlogDto> updateBlog(@PathVariable int id, @Valid @RequestBody Blog blog) throws EntityNotFoundException {
-        ModelMapper mapper = new ModelMapper();
 
         if (!blogRepository.findById(id).isPresent())
             throw new EntityNotFoundException("The blog with ID = " + id + " doesn't exist");
-        //TODO: use DTO instead of custom query
-        Blog blogToUpdate = (Blog) blogRepository.getOne(id);
+        Blog blogToUpdate = blogRepository.getOne(id);
         blogToUpdate.setTitle(blog.getTitle());
         blogToUpdate.setContent(blog.getContent());
         blogRepository.save(blogToUpdate);
@@ -96,7 +94,6 @@ public class BlogController {
         newUser.setRole("USER");
         return ResponseEntity.status(201).body(userRepository.save(newUser));
     }
-    //TODO: DTO
     //TODO: documentation
     //TODO: primitive UI
     //TODO: tests
