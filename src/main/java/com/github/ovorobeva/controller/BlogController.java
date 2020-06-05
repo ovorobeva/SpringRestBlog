@@ -5,6 +5,8 @@ import com.github.ovorobeva.dto.BlogDto;
 import com.github.ovorobeva.model.Blog;
 import com.github.ovorobeva.dao.BlogRepository;
 import com.github.ovorobeva.model.CustomUser;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Api(value = "DemoBlogController", description = "REST APIs related to Blog Entity")
 @RestController
 public class BlogController {
 
@@ -86,6 +89,7 @@ public class BlogController {
 
         return ResponseEntity.ok().body(true);
     }
+    //TODO: move to UserController
     @PostMapping("/user/create")
     public ResponseEntity<CustomUser> createUser(@Valid @RequestBody Map<String, String> body){
         CustomUser newUser = new CustomUser();

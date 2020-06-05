@@ -1,6 +1,7 @@
 package com.github.ovorobeva.model;
 
 
+import io.swagger.annotations.ApiModel;
 import lombok.*;
 import org.springframework.web.bind.annotation.ResponseBody;
 
