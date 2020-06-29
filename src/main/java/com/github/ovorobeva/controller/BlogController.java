@@ -6,12 +6,12 @@ import com.github.ovorobeva.model.Blog;
 import com.github.ovorobeva.dao.BlogRepository;
 import com.github.ovorobeva.model.CustomUser;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
@@ -43,6 +43,7 @@ public class BlogController {
         if (blogs.isEmpty()) throw new EntityNotFoundException("The bloglist is empty");
         return ResponseEntity.ok().body(blogs);
     }
+
 
     @GetMapping("/blog/{id}")
     public ResponseEntity<BlogDto> getBlog(@PathVariable int id) throws EntityNotFoundException {
