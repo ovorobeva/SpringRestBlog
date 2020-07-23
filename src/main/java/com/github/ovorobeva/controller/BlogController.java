@@ -90,15 +90,6 @@ public class BlogController {
 
         return ResponseEntity.ok().body(true);
     }
-    //TODO: move to UserController
-    @PostMapping("/user/create")
-    public ResponseEntity<CustomUser> createUser(@Valid @RequestBody Map<String, String> body){
-        CustomUser newUser = new CustomUser();
-        newUser.setUsername(body.get("login"));
-        newUser.setPassword(body.get("password"));
-        newUser.setRole("USER");
-        return ResponseEntity.status(201).body(userRepository.save(newUser));
-    }
     //TODO: documentation
     //TODO: primitive UI
     //TODO: tests

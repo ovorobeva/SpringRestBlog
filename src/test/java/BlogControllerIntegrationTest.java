@@ -78,28 +78,6 @@ public class BlogControllerIntegrationTest {
     }
 
     @Test
-    public void createUser_testStatus201() {
-        CustomUser user = new CustomUser();
-        user.setUsername("New_user");
-        user.setPassword("Password");
-       // user.setRole("USER");
-        ResponseEntity<String> resp = testRestTemplate.exchange("/logout", HttpMethod.POST, null, String.class);
-
-        ResponseEntity<CustomUserDto> response = testRestTemplate.exchange("/user/create",
-                HttpMethod.POST,
-                new HttpEntity<>(user),
-                CustomUserDto.class);
-        assertThat(response.getStatusCode(), is(HttpStatus.CREATED));
-        assertThat(response.getBody().getId(), notNullValue());
-        assertThat(response.getBody().getUsername(), is("New_user"));
-        assertThat(response.getBody().getRole(), is("USER"));
-
-      /*  HttpHeaders headers = new HttpHeaders();
-        headers.add("Cookies", getCookieForUser("New_user", "Password", "/login"));
-*/
-    }
-
-    @Test
     public void getBlog() {
         int id = createBlog().getId();
         ResponseEntity<BlogDto> response = testRestTemplate.getForEntity("/blog/{id}", BlogDto.class, id);
