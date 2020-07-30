@@ -44,7 +44,6 @@ public class BlogController {
         return ResponseEntity.ok().body(blogs);
     }
 
-
     @GetMapping("/blog/{id}")
     public ResponseEntity<BlogDto> getBlog(@PathVariable int id) throws EntityNotFoundException {
         if (!blogRepository.findById(id).isPresent())
